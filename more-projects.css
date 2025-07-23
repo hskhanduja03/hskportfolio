@@ -1,0 +1,127 @@
+.headline-temp {
+  font-family: "Sora", sans-serif;
+  font-weight: 300;
+}
+.headline {
+  font-family: "Sora", sans-serif;
+  font-weight: 100;
+  font-size: 2rem;
+  color: #bebcdd;
+}
+.horizontal-headline {
+  font-family: "Sora", sans-serif;
+  font-weight: 300;
+  color: #bebcdd;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+.text-animation {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: black;
+}
+
+.text-animation main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding-inline: 5vw;
+  position: relative;
+  z-index: 10;
+}
+
+.text-revel {
+  font-size: 50px;
+  text-align: center;
+  z-index: 10;
+}
+
+.highlights {
+  position: relative;
+  z-index: 10;
+}
+
+.highlighted-one {
+  position: absolute;
+  top: 0;
+  right: -15px;
+  opacity: 0;
+  height: 15px;
+  width: 15px;
+  font-size: 8px;
+  font-weight: 900;
+  background-color: #c75656;
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+/* tech stack css */
+
+@keyframes scroll-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-x-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#tech-scroll-row-1 {
+  animation: scroll-x 40s linear infinite;
+  display: flex;
+  flex-wrap: nowrap;
+  will-change: transform;
+}
+
+#tech-scroll-row-2 {
+  animation: scroll-x-reverse 40s linear infinite;
+  display: flex;
+  flex-wrap: nowrap;
+  will-change: transform;
+}
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scroll-right 30s linear infinite;
+}
+
+#tech-scroll-row-1:hover,
+#tech-scroll-row-2:hover {
+  animation-play-state: paused;
+}

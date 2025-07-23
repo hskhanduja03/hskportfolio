@@ -1,4 +1,3 @@
-import { Expo } from "gsap";
 import gsap from "gsap";
 
 Shery.imageEffect("#back-rb", {
@@ -77,7 +76,7 @@ if (main_rb) {
       });
 
       // Update the counter
-      i = i >= 5 ? 1 : i + 1;
+      i = i >= 2 ? 1 : i + 1;
 
       // Fade in the next image
       gsap.to(allImages[i - 1], {
@@ -85,6 +84,23 @@ if (main_rb) {
         ease: "power2.inOut",
         duration: 1,
       });
+      const imgDiv = document.querySelector(".img-div-rb");
+      const fadeLayer = document.querySelector(".img-fade-layer");
+
+      if (imgDiv && fadeLayer) {
+        const newImage =
+          i === 1 ? "/projects/feedlytic.png" : "/projects/FeedLyticdark.png";
+
+        // Set the fade layer image and fade it in
+        fadeLayer.style.backgroundImage = `url(${newImage})`;
+        fadeLayer.style.opacity = "1";
+
+        // After transition, update the main background and hide the fade layer
+        setTimeout(() => {
+          imgDiv.style.backgroundImage = `url(${newImage})`;
+          fadeLayer.style.opacity = "0";
+        }, 800); // match with transition duration
+      }
 
       // Animate the next text in
       gsap.to(`.elem-rb h1:nth-child(${i})`, {
@@ -98,3 +114,19 @@ if (main_rb) {
     }
   };
 }
+const mainRb = document.getElementById("main_rb");
+
+const clickCursor = document.createElement("div");
+clickCursor.id = "click-cursor";
+clickCursor.innerHTML = "Featured<br/>Project";
+document.body.appendChild(clickCursor);
+
+mainRb.addEventListener("mousemove", (e) => {
+  clickCursor.style.left = `${e.clientX}px`;
+  clickCursor.style.top = `${e.clientY}px`;
+  clickCursor.style.display = "flex";
+});
+
+mainRb.addEventListener("mouseleave", () => {
+  clickCursor.style.display = "none";
+});

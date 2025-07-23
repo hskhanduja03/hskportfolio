@@ -1,9 +1,9 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Make sure to register the plugin
 gsap.registerPlugin(ScrollTrigger);
 
+// --- LOADING ANIMATION ---
 let tl = gsap.timeline();
 function loadingAnimation() {
   tl.to(".loader .yellow", {
@@ -19,7 +19,7 @@ function loadingAnimation() {
     .to(
       ".loader video, .loader h1",
       {
-        delay:2,
+        delay: 2,
         opacity: 0,
         duration: 0.5,
         onComplete: () => {
@@ -54,8 +54,8 @@ function loadingAnimation() {
 }
 loadingAnimation();
 
+// --- DYNAMIC NAVBAR ANIMATION ---
 function dynamicNavbarAnimation() {
-  // --- 1. SELECT ELEMENTS ---
   const nav = document.querySelector("nav");
   const navBlurElement = document.querySelector(
     "nav .home-section > .blur-css"
@@ -64,9 +64,6 @@ function dynamicNavbarAnimation() {
   const contactText = document.querySelector(".contact-us .contact-text");
   const callIcon = document.querySelector(".contact-us .call-icon-wrapper");
 
-  // --- 2. CREATE THE SHRINK ANIMATION TIMELINE ---
-  // This timeline contains all the animations for shrinking the navbar.
-  // It's paused by default and we will control it with ScrollTrigger.
   const shrinkNavTl = gsap.timeline({ paused: true });
 
   shrinkNavTl
@@ -116,29 +113,106 @@ function dynamicNavbarAnimation() {
       ">-0.1"
     );
 
-  // --- 3. CREATE THE SCROLL LOGIC ---
   let scrollTimeout;
+  let lastScrollTop = 0;
 
   ScrollTrigger.create({
-    start: "top -80", // Start checking after scrolling down 80px
+    start: "top -80",
     end: 99999,
-    // This function runs every time the user scrolls
     onUpdate: (self) => {
-      // While scrolling (in any direction), play the shrink animation
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      const distanceFromBottom = docHeight - (scrollTop + windowHeight);
+      const isNearBottom = distanceFromBottom <= windowHeight;
+      const scrollingDown = scrollTop > lastScrollTop;
+      const scrollingUp = scrollTop < lastScrollTop;
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+      // 1. Hide navbar if scrolling down near bottom
+      if (isNearBottom && scrollingDown) {
+        gsap.to(nav, {
+          opacity: 0,
+          duration: 0.1,
+          ease: "power2.inOut",
+        });
+        return;
+      }
+
+      // 2. Show navbar when scrolling up
+      if (scrollingUp) {
+        gsap.to(nav, {
+          opacity: 1,
+          duration: 0.1,
+          ease: "power2.inOut",
+        });
+      }
+
+      // 3. Shrink navbar while scrolling
       shrinkNavTl.play();
 
-      // Clear the previous timeout to reset the "stop" timer
+      // 4. Expand it back when scrolling stops
       clearTimeout(scrollTimeout);
-
-      // Set a new timeout. If 200ms pass without a new scroll event,
-      // it means the user has stopped.
       scrollTimeout = setTimeout(() => {
-        // User has stopped scrolling, so reverse the animation to expand the nav
         shrinkNavTl.reverse();
-      }, 200); // 200ms delay feels responsive
+      }, 200);
     },
   });
 }
 
-// Call the function to activate it
 dynamicNavbarAnimation();
+
+function animateResumeButtonOnScroll() {
+  const resumeWrapper = document.getElementById("resume-button-wrapper");
+  const resumeButton = resumeWrapper.querySelector(".resume-button");
+  const resumeText = resumeWrapper.querySelector(".resume-text");
+
+  const shrinkResumeTl = gsap.timeline({ paused: true });
+
+  shrinkResumeTl
+    .to(resumeButton, {
+      width: "3rem",
+      paddingLeft: "0.75rem",
+      paddingRight: "0.75rem",
+      gap: 0,
+      duration: 0.3,
+      ease: "power2.inOut",
+    })
+    .to(
+      resumeText,
+      {
+        width: 0,
+        opacity: 0,
+        autoAlpha: 0,
+        duration: 0.1,
+        ease: "power2.in",
+      },
+      "<"
+    );
+
+  let lastScrollTop = 0;
+  let scrollTimeout;
+
+  ScrollTrigger.create({
+    start: "top -80",
+    end: 99999,
+    onUpdate: (self) => {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const scrollingDown = scrollTop > lastScrollTop;
+      const scrollingUp = scrollTop < lastScrollTop;
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+      // Shrink while scrolling
+      shrinkResumeTl.play();
+
+      // Expand back after scroll stops
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        shrinkResumeTl.reverse();
+      }, 200);
+    },
+  });
+}
+
+animateResumeButtonOnScroll();
