@@ -103,35 +103,35 @@
       {
         "index": 0,
         "title": "LIME AI IMAGE GENERATOR",
-        "image": "/public/projects/limeai.png",
+        "image": "/projects/limeai.png",
         "link": "https://lime-ai-image-generator.vercel.app/",
         "github": "https://github.com/hskhanduja03/Lime-Ai-Image-Generator"
       },
       {
         "index": 1,
         "title": "UNCOMMON STUDIOS",
-        "image": "/public/projects/uncommon.png",
+        "image": "/projects/uncommon.png",
         "link": "https://uncommon-studios.vercel.app/",
         "github": "https://github.com/hskhanduja03/animated-website"
       },
       {
         "index": 2,
         "title": "COLD EMAIL GENERATOR",
-        "image": "/public/projects/coldemail.png",
+        "image": "/projects/coldemail.png",
         "link": "https://huggingface.co/spaces/hskhanduja03/cold-email-generator",
         "github": "https://github.com/hskhanduja03/cold-email-generator"
       },
       {
         "index": 3,
         "title": "MAKRO AGENCY CLONE",
-        "image": "/public/projects/MAKROCLONE.png",
+        "image": "/projects/MAKROCLONE.png",
         "link": "https://makro-agency.vercel.app/",
         "github": "https://github.com/hskhanduja03/animated-makro-website"
       },
       {
         "index": 4,
         "title": "WHISPLINK AI",
-        "image": "/public/projects/whisplink.png",
+        "image": "/projects/whisplink.png",
         "link": "https://whisplink-ai.streamlit.app/",
         "github": "https://github.com/hskhanduja03/WhispLinkAI"
       }
